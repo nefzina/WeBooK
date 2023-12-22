@@ -1,5 +1,7 @@
 package com.wildcodeschool.webook.user.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wildcodeschool.webook.role.domain.entity.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 
@@ -23,6 +25,14 @@ public class User {
 
     @Column(name = "city", nullable = false)
     private String city;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, optional = false)
+    @JoinColumn(name = "role_id", nullable = false)
+    @JsonIgnore
+    private Role role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Book> books;
 
     public String getUsername() {
         return username;
