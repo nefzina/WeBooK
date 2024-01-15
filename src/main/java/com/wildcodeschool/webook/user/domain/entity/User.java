@@ -1,9 +1,12 @@
 package com.wildcodeschool.webook.user.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wildcodeschool.webook.book.domain.entity.Book;
 import com.wildcodeschool.webook.role.domain.entity.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class User {
