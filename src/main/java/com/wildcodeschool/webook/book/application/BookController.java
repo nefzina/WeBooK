@@ -25,17 +25,17 @@ import java.util.List;
             return bookService.getOneBook(id);
         }
 
-        @PostMapping("/book/new")
+        @PostMapping("/book")
         public Book add(@RequestBody Book newBook) {
             return bookService.createBook(newBook);
         }
 
-        @PutMapping("/book/update/{id}")
+        @PutMapping("/book/{id}")
         public Book update(@RequestBody Book newBook, @PathVariable Long id) {
             return bookService.updateBook(newBook, id);
         }
 
-        @DeleteMapping("/book/delete/{id}")
+        @DeleteMapping("/book/{id}")
         public void delete(@PathVariable Long id) {
             bookService.deleteBook(id);
         }

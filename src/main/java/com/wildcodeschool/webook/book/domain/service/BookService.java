@@ -34,7 +34,7 @@ public class BookService {
         return repository.findById(id)
                 .map(book -> {
                     book.setName(newBook.getName());
-                    book.setOwnerById(newBook.getOwnerById());
+                    book.setOwnerId(newBook.getOwnerId());
                     book.setImage(newBook.getImage());
                     book.setAuthor(newBook.getAuthor());
                     book.setEdition(newBook.getEdition());
