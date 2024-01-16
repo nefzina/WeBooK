@@ -1,9 +1,7 @@
 package com.wildcodeschool.webook.book.domain.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wildcodeschool.webook.role.domain.entity.Role;
 import com.wildcodeschool.webook.user.domain.entity.User;
 import jakarta.persistence.*;
-
 
 @Entity
 public class Book {
@@ -29,17 +27,23 @@ public class Book {
     @Column(name = "review", nullable = true)
     private String review;
 
+    @Column(name = "resume", nullable = true)
+    private String resume;
+
+    @Column(name = "ISBN", nullable = true)
+    private String isbn;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, optional = false)
     @JoinColumn(name = "User_id", nullable = false)
     @JsonIgnore
     private User user;
 
-    public String getReview() {
-        return review;
+    public Long getId() {
+        return id;
     }
 
-    public void setReview(String review) {
-        this.review = review;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -82,6 +86,14 @@ public class Book {
         this.edition = edition;
     }
 
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
+
     public String getResume() {
         return resume;
     }
@@ -98,18 +110,11 @@ public class Book {
         this.isbn = isbn;
     }
 
-    @Column(name = "resume", nullable = true)
-    private String resume;
+    public User getUser() {
+        return user;
+    }
 
-    @Column(name = "ISBN", nullable = true)
-    private String isbn;
-
-
-
-
-
-
-
-
-
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
