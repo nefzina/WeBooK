@@ -14,8 +14,8 @@ public class Book {
     private String name;
 
 
-    @Column(name = "ownerById", nullable = false)
-    private String ownerById;
+    @Column(name = "owner_Id", nullable = false)
+    private String ownerId;
 
     @Column(name = "image", nullable = true)
     private String image;
@@ -46,12 +46,12 @@ public class Book {
         this.name = name;
     }
 
-    public String getOwnerById() {
-        return ownerById;
+    public String getOwnerId() {
+        return ownerId;
     }
 
-    public void setOwnerById(String ownerById) {
-        this.ownerById = ownerById;
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getImage() {
