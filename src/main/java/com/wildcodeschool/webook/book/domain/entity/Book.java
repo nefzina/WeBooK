@@ -1,6 +1,8 @@
 package com.wildcodeschool.webook.book.domain.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wildcodeschool.webook.role.domain.entity.Role;
+import com.wildcodeschool.webook.user.domain.entity.User;
 import jakarta.persistence.*;
-
 
 
 @Entity
@@ -9,10 +11,8 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(name = "name", nullable = false)
     private String name;
-
 
     @Column(name = "owner_Id", nullable = false)
     private String ownerId;
@@ -29,6 +29,11 @@ public class Book {
     @Column(name = "review", nullable = true)
     private String review;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, optional = false)
+    @JoinColumn(name = "User_id", nullable = false)
+    @JsonIgnore
+    private User user;
+
     public String getReview() {
         return review;
     }
@@ -36,7 +41,6 @@ public class Book {
     public void setReview(String review) {
         this.review = review;
     }
-
 
     public String getName() {
         return name;
