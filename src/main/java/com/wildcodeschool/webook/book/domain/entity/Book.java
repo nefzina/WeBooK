@@ -5,20 +5,17 @@ import com.wildcodeschool.webook.user.domain.entity.User;
 import jakarta.persistence.*;
 
 
-
 @Entity
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(name = "name", nullable = false)
     private String name;
 
-
-    @Column(name = "ownerId", nullable = false)
-    private String ownerById;
+    @Column(name = "owner_Id", nullable = false)
+    private String ownerId;
 
     @Column(name = "image", nullable = true)
     private String image;
@@ -45,7 +42,6 @@ public class Book {
         this.review = review;
     }
 
-
     public String getName() {
         return name;
     }
@@ -54,12 +50,12 @@ public class Book {
         this.name = name;
     }
 
-    public String getOwnerById() {
-        return ownerById;
+    public String getOwnerId() {
+        return ownerId;
     }
 
-    public void setOwnerById(String ownerById) {
-        this.ownerById = ownerById;
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getImage() {
