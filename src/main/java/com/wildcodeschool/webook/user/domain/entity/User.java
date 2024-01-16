@@ -1,9 +1,12 @@
 package com.wildcodeschool.webook.user.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wildcodeschool.webook.book.domain.entity.Book;
 import com.wildcodeschool.webook.role.domain.entity.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class User {
@@ -14,7 +17,7 @@ public class User {
     @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "password", nullable = false)
@@ -25,6 +28,9 @@ public class User {
 
     @Column(name = "city", nullable = false)
     private String city;
+
+    @Column(name = "isEnabled", nullable = false)
+    private Boolean isEnabled;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
@@ -72,5 +78,29 @@ public class User {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public Boolean getEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        isEnabled = enabled;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 }
