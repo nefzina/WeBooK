@@ -13,6 +13,7 @@ public class UserMapper {
                 user.getZip_code(),
                 user.getCity(),
                 user.getRole(),
+                user.getPreferences(),
                 user.getBooks(),
                 user.getEnabled());
     }
