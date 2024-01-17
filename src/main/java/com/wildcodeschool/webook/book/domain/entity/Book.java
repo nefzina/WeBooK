@@ -1,6 +1,6 @@
 package com.wildcodeschool.webook.book.domain.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wildcodeschool.webook.user.domain.entity.User;
+import com.wildcodeschool.webook.Auth.domain.entity.User;
 import jakarta.persistence.*;
 
 @Entity
