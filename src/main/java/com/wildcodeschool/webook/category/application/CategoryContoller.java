@@ -14,22 +14,22 @@ public class CategoryContoller {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/category")
+    @GetMapping("/categories")
     List<Category> readAll() {
         return categoryService.getAllCategory();
     }
 
-    @GetMapping("/category/{id}")
+    @GetMapping("/categories/{id}")
     public Category readOne(@PathVariable Long id){
         return categoryService.getOneCategory(id);
     }
 
-    @PutMapping("/category/{id}")
+    @PutMapping("/categories/{id}")
     public Category edit(@RequestBody Category newCategory, @PathVariable Long id) {
         return categoryService.updateCategory(newCategory, id);
     }
 
-    @DeleteMapping("/category/{id}")
+    @DeleteMapping("/categories/{id}")
     public void delete(@PathVariable Long id) {
         categoryService.deleteCategory(id);
     }
