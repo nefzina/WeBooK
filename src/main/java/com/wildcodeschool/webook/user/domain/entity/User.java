@@ -2,6 +2,7 @@ package com.wildcodeschool.webook.user.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wildcodeschool.webook.book.domain.entity.Book;
+import com.wildcodeschool.webook.category.domain.entity.Category;
 import com.wildcodeschool.webook.role.domain.entity.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
@@ -36,6 +37,14 @@ public class User {
     @JoinColumn(name = "role_id", nullable = false)
     @JsonIgnore
     private Role role;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JoinTable(
+            name = "category_preferences",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private List<Category> preferences;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Book> books;
@@ -94,6 +103,14 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public List<Category> getPreferences() {
+        return preferences;
+    }
+
+    public void setPreferences(List<Category> preferences) {
+        this.preferences = preferences;
     }
 
     public List<Book> getBooks() {
