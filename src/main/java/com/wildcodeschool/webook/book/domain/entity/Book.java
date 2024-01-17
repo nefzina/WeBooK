@@ -17,7 +17,7 @@ public class Book {
     private String name;
 
 
-    @Column(name = "ownerById", nullable = false)
+    @Column(name = "ownerId", nullable = false)
     private String ownerById;
 
     @Column(name = "image", nullable = true)
