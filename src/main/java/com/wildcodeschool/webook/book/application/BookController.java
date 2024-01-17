@@ -15,27 +15,27 @@ import java.util.List;
             this.bookService = bookService;
         }
 
-        @GetMapping("/book")
+        @GetMapping("/books")
         public List<Book> readAll() {
             return bookService.getAllBook();
         }
 
-        @GetMapping("/book/{id}")
+        @GetMapping("/books/{id}")
         public Book searchOne(@PathVariable Long id) {
             return bookService.getOneBook(id);
         }
 
-        @PostMapping("/book/new")
+        @PostMapping("/books/new")
         public Book add(@RequestBody Book newBook) {
             return bookService.createBook(newBook);
         }
 
-        @PutMapping("/book/update/{id}")
+        @PutMapping("/books/update/{id}")
         public Book update(@RequestBody Book newBook, @PathVariable Long id) {
             return bookService.updateBook(newBook, id);
         }
 
-        @DeleteMapping("/book/delete/{id}")
+        @DeleteMapping("/books/delete/{id}")
         public void delete(@PathVariable Long id) {
             bookService.deleteBook(id);
         }
