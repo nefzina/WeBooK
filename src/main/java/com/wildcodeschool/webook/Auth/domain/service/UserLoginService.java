@@ -1,7 +1,7 @@
-package com.wildcodeschool.webook.auth.domain.service;
+package com.wildcodeschool.webook.Auth.domain.service;
 
-import com.wildcodeschool.webook.auth.domain.entity.User;
-import com.wildcodeschool.webook.auth.infrastructure.repository.UserRepository;
+import com.wildcodeschool.webook.Auth.domain.entity.User;
+import com.wildcodeschool.webook.Auth.infrastructure.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,7 +28,7 @@ public class UserLoginService {
             throw new RuntimeException();
         }
 
-        user.setRoles(userEntity.getRoles());
+       // user.setRoles(userEntity.getRoles());
 
         return user;
     }

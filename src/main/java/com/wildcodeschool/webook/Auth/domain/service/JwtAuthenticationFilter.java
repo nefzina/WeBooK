@@ -1,4 +1,4 @@
-package com.wildcodeschool.webook.auth.domain.service;
+package com.wildcodeschool.webook.Auth.domain.service;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

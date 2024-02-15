@@ -1,7 +1,7 @@
 package com.wildcodeschool.webook.Auth.application;
 
 import com.wildcodeschool.webook.Auth.domain.entity.User;
-import com.wildcodeschool.webook.Auth.domain.sevice.UserService;
+import com.wildcodeschool.webook.Auth.domain.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

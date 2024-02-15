@@ -1,4 +1,4 @@
-package com.wildcodeschool.webook.auth.domain.entity;
+package com.wildcodeschool.webook.Auth.domain.entity;
 
 public class Token {
     private String token;

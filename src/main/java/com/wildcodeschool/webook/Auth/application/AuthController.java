@@ -1,11 +1,11 @@
 package com.wildcodeschool.webook.Auth.application;
 
 import com.wildcodeschool.webook.Auth.domain.dto.UserDTO;
-import com.wildcodeschool.webook.Auth.domain.sevice.JwtService;
-import com.wildcodeschool.webook.Auth.domain.sevice.UserDetailsServiceImpl;
-import com.wildcodeschool.webook.Auth.domain.sevice.UserRegistrationService;
+import com.wildcodeschool.webook.Auth.domain.service.JwtService;
+import com.wildcodeschool.webook.Auth.domain.service.UserDetailsServiceImpl;
+import com.wildcodeschool.webook.Auth.domain.service.UserRegistrationService;
 import com.wildcodeschool.webook.Auth.domain.entity.User;
-import com.wildcodeschool.webook.Auth.domain.sevice.UserService;
+import com.wildcodeschool.webook.Auth.domain.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -31,17 +31,17 @@ public class AuthController {
         this.userRegistrationService = userRegistrationService;
     }
 
-@PostMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User userBody) throws Exception {
         try{
             userService.login(userBody);
-                String token = jwtService.generateToken(userDetailsService.loadUserByEmail(userBody.getEmail()));
+            String token = jwtService.generateToken(userDetailsService.loadUserByEmail(userBody.getEmail()));
             return  ResponseEntity.ok(token);
 
         }catch (BadCredentialsException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-}
+    }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User userBody) throws Exception {

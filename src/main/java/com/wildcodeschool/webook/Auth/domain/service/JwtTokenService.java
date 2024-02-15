@@ -1,6 +1,6 @@
-package com.wildcodeschool.webook.auth.domain.service;
+package com.wildcodeschool.webook.Auth.domain.service;
 
-import com.wildcodeschool.webook.auth.domain.entity.Token;
+import com.wildcodeschool.webook.Auth.domain.entity.Token;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

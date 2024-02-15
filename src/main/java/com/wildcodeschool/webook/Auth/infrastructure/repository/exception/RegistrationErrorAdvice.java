@@ -1,4 +1,4 @@
-package com.wildcodeschool.webook.auth.infrastructure.repository.exception;
+package com.wildcodeschool.webook.Auth.infrastructure.repository.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

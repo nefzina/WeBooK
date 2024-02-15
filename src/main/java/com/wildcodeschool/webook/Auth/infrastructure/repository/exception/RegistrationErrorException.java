@@ -1,4 +1,4 @@
-package com.wildcodeschool.webook.auth.infrastructure.repository.exception;
+package com.wildcodeschool.webook.Auth.infrastructure.repository.exception;
 
 public class RegistrationErrorException extends RuntimeException{
     public RegistrationErrorException(String message) {

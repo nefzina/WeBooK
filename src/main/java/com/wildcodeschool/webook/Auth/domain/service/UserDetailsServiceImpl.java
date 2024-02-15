@@ -1,13 +1,10 @@
-package com.wildcodeschool.webook.auth.domain.service;
+package com.wildcodeschool.webook.Auth.domain.service;
 
-import com.wildcodeschool.webook.auth.domain.dto.UserPrincipal;
-import com.wildcodeschool.webook.auth.infrastructure.repository.UserRepository;
+import com.wildcodeschool.webook.Auth.domain.dto.UserPrincipal;
+import com.wildcodeschool.webook.Auth.infrastructure.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import com.wildcodeschool.webook.auth.domain.dto.UserPrincipal;
-import com.wildcodeschool.webook.auth.domain.entity.User;
-import com.wildcodeschool.webook.auth.infrastructure.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,5 +18,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return new UserPrincipal(userRepository.findByUsername(username));
+    }
+    public UserPrincipal loadUserByEmail(String email) throws UsernameNotFoundException {
+        return new UserPrincipal(userRepository.findByEmail(email));
     }
 }
