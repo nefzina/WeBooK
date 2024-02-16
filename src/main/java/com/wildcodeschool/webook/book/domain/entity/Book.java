@@ -1,42 +1,33 @@
 package com.wildcodeschool.webook.book.domain.entity;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wildcodeschool.webook.Auth.domain.entity.User;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "book")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(name = "name", nullable = false)
     private String name;
-
-    @Column(name = "owner_Id", nullable = false)
-    private String ownerId;
-
     @Column(name = "image", nullable = true)
     private String image;
-
     @Column(name = "author", nullable = false)
     private String author;
-
     @Column(name = "edition", nullable = true)
     private String edition;
-
     @Column(name = "review", nullable = true)
     private String review;
-
     @Column(name = "resume", nullable = true)
     private String resume;
-
     @Column(name = "ISBN", nullable = true)
     private String isbn;
-
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, optional = false)
-    @JoinColumn(name = "User_id", nullable = false)
+    @JoinColumn(name = "owner_id", nullable = false)
     @JsonIgnore
-    private User user;
+    private User owner;
 
     public Long getId() {
         return id;
@@ -52,14 +43,6 @@ public class Book {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
     }
 
     public String getImage() {
@@ -110,11 +93,11 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public User getUser() {
-        return user;
+    public User getOwner() {
+        return owner;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }

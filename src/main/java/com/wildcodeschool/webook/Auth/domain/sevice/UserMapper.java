@@ -15,6 +15,6 @@ public class UserMapper {
                 user.getRole(),
                 user.getPreferences(),
                 user.getBooks(),
-                user.getEnabled());
+                true);
     }
 }

@@ -9,24 +9,25 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username", nullable = false, length = 20)
     private String username;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true, length = 50)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = false, length = 40)
     private String password;
 
     @Column(name = "zipCode", nullable = true)
     private Number zip_code;
 
-    @Column(name = "city", nullable = false)
+    @Column(name = "city", nullable = false, length = 10)
     private String city;
 
     @Column(name = "isEnabled", nullable = false)
@@ -45,7 +46,7 @@ public class User {
     )
     private List<Category> preferences;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
     private List<Book> books;
 
     public long getId() {
