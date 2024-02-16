@@ -1,5 +1,6 @@
 package com.wildcodeschool.webook.Auth.domain.service;
 
+import com.wildcodeschool.webook.Auth.domain.dto.UserPrincipal;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -8,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -18,46 +18,42 @@ import java.util.Arrays;
 
 @Service
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private final JwtTokenService jwtTokenService;
+    private final JwtService jwtService;
     private final UserDetailsServiceImpl userDetailsService;
 
-    public JwtAuthenticationFilter(
-            JwtTokenService jwtTokenService,
-            UserDetailsServiceImpl userDetailsService
-    ) {
-        this.jwtTokenService = jwtTokenService;
+    public JwtAuthenticationFilter(JwtService jwtService, UserDetailsServiceImpl userDetailsService) {
+        this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;
     }
 
     @Override
-    protected void  doFilterInternal(
+    protected void doFilterInternal(
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        final String token;
-        final String username;
+        final String jwt;
+        final String email;
 
         if (request.getCookies() == null) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        token = Arrays.stream(request.getCookies())
+        jwt = Arrays.stream(request.getCookies())
                 .filter(cookie -> "token".equals(cookie.getName()))
                 .findFirst()
                 .map(Cookie::getValue)
                 .orElse(null);
+        email = jwtService.getEmailFromToken(jwt);
 
-        username = jwtTokenService.getUsernameFromToken(token);
-
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            if (jwtTokenService.isTokenValid(token, userDetails)) {
+        if (email != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+            UserPrincipal userPrincipal = this.userDetailsService.loadUserByEmail(email);
+            if (jwtService.isTokenValid(jwt, userPrincipal)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails,
+                        userPrincipal,
                         null,
-                        userDetails.getAuthorities()
+                        userPrincipal.getAuthorities()
                 );
                 authToken.setDetails(
                         new WebAuthenticationDetailsSource().buildDetails(request)
@@ -67,5 +63,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         }
     }
-
 }
