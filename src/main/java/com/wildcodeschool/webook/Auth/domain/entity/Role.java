@@ -1,6 +1,4 @@
 package com.wildcodeschool.webook.Auth.domain.entity;
-
-import com.wildcodeschool.webook.Auth.domain.entity.User;
 import jakarta.persistence.*;
 
 import java.util.List;
