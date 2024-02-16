@@ -1,6 +1,6 @@
 package com.wildcodeschool.webook.Auth.application;
 
-import com.wildcodeschool.webook.Auth.domain.sevice.JwtAuthenticationFilter;
+import com.wildcodeschool.webook.Auth.domain.service.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

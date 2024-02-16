@@ -1,11 +1,11 @@
 package com.wildcodeschool.webook.Auth.application;
 
 import com.wildcodeschool.webook.Auth.domain.dto.UserDTO;
-import com.wildcodeschool.webook.Auth.domain.sevice.JwtService;
-import com.wildcodeschool.webook.Auth.domain.sevice.UserDetailsServiceImpl;
+import com.wildcodeschool.webook.Auth.domain.service.JwtService;
+import com.wildcodeschool.webook.Auth.domain.service.UserDetailsServiceImpl;
+import com.wildcodeschool.webook.Auth.domain.service.UserService;
 import com.wildcodeschool.webook.Auth.domain.sevice.UserRegistrationService;
 import com.wildcodeschool.webook.Auth.domain.entity.User;
-import com.wildcodeschool.webook.Auth.domain.sevice.UserService;
 import com.wildcodeschool.webook.Auth.infrastructure.exception.RegistrationErrorException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

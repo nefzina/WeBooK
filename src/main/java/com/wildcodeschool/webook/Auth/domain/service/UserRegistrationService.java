@@ -1,4 +1,4 @@
-package com.wildcodeschool.webook.Auth.domain.sevice;
+package com.wildcodeschool.webook.Auth.domain.service;
 
 import com.wildcodeschool.webook.Auth.domain.dto.UserDTO;
 import com.wildcodeschool.webook.Auth.domain.entity.User;
@@ -20,7 +20,7 @@ public class UserRegistrationService {
 
     public UserDTO registration(User userData) throws Exception {
         userData.setPassword(bcryptPwEncoder.encode(userData.getPassword()));
-        userData.setRole(2);
+//        userData.setRole(2);
 
         try {
             System.out.println(userData.getEmail());
