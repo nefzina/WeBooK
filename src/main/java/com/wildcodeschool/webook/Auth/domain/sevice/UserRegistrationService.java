@@ -18,20 +18,25 @@ public class UserRegistrationService {
         this.userMapper = userMapper;
     }
 
-    public UserDTO registration(User userData) {
+    public UserDTO registration(User userData) throws Exception {
+        userData.setPassword(bcryptPwEncoder.encode(userData.getPassword()));
+        userData.setRole(2);
 
-        User userEntity = repository.findByEmail(userData.getEmail());
-        if (userEntity != null) {
-            throw new RuntimeException("Cette adresse mail existe déjà");
-        } else {
-            userData.setPassword(bcryptPwEncoder.encode(userData.getPassword()));
-            try {
-                User user = repository.save(userData);
-                return userMapper.transformUserEntityInUserDTO(user);
+        try {
+            System.out.println(userData.getEmail());
+            System.out.println(userData.getPassword());
+            System.out.println(userData.getUsername());
+            System.out.println(userData.getCity());
+            System.out.println(userData.getRole());
+            System.out.println(userData.getZip_code());
+            System.out.println(userData.getBooks());
 
-            } catch (Exception e) {
-                throw new RuntimeException();
-            }
+            User user = repository.save(userData);
+
+            return userMapper.transformUserEntityInUserDTO(user);
+
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
         }
     }
 }
