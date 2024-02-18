@@ -1,6 +1,7 @@
 package com.wildcodeschool.webook.Auth.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wildcodeschool.webook.Auth.infrastructure.repository.UserRepository;
 import com.wildcodeschool.webook.book.domain.entity.Book;
 import com.wildcodeschool.webook.book.domain.entity.Category;
 import jakarta.persistence.Entity;
@@ -128,4 +129,6 @@ public class User {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
+
+
 }
