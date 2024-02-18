@@ -11,16 +11,20 @@ public class UserRegistrationService {
     private final UserRepository repository;
     private final BCryptPasswordEncoder bcryptPwEncoder;
     private final UserMapper userMapper;
+    private final RoleService roleService;
 
-    public UserRegistrationService(UserRepository repository, BCryptPasswordEncoder bcryptPwEncoder, UserMapper userMapper) {
+    public UserRegistrationService(UserRepository repository, BCryptPasswordEncoder bcryptPwEncoder,
+                                   UserMapper userMapper, RoleService roleService) {
         this.repository = repository;
         this.bcryptPwEncoder = bcryptPwEncoder;
         this.userMapper = userMapper;
+        this.roleService = roleService;
+
     }
 
     public UserDTO registration(User userData) throws Exception {
         userData.setPassword(bcryptPwEncoder.encode(userData.getPassword()));
-//        userData.setRole(2);
+        userData.setRole(roleService.getOneRole(1));
 
         try {
             System.out.println(userData.getEmail());

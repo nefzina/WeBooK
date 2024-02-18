@@ -43,7 +43,6 @@ public class UserService {
                 })
                 .orElseThrow(NotFoundException::new);
     }
-
     public void deleteUser(Long id) {
         repository.deleteById(id);
     }

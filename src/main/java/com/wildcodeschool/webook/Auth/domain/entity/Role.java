@@ -6,9 +6,10 @@ import java.util.List;
 @Entity
 @Table(name = "role")
 public class Role {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(name = "type", nullable = false)
     private String type;
@@ -16,11 +17,11 @@ public class Role {
     @OneToMany(mappedBy = "role", cascade = CascadeType.REFRESH)
     private List<User> users;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
