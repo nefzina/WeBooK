@@ -25,6 +25,7 @@ public class UserRegistrationService {
     public UserDTO registration(User userData) throws Exception {
         userData.setPassword(bcryptPwEncoder.encode(userData.getPassword()));
         userData.setRole(roleService.getOneRole(1));
+        userData.setEnabled(true);
 
         try {
             System.out.println(userData.getEmail());
