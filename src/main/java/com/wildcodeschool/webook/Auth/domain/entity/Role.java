@@ -1,4 +1,5 @@
 package com.wildcodeschool.webook.Auth.domain.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class Role {
     private String type;
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.REFRESH)
+    @JsonIgnore
     private List<User> users;
 
     public int getId() {
