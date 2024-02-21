@@ -32,7 +32,6 @@ build/
 
 ### VS Code ###
 .vscode/
+.env
 
-!**/src/main/resources/application.properties
-
-
+!upload-dir

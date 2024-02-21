@@ -7,7 +7,6 @@ import com.wildcodeschool.webook.fileUpload.infrastructure.exception.StorageExce
 import com.wildcodeschool.webook.fileUpload.infrastructure.exception.UploadedFileNotFoundException;
 import com.wildcodeschool.webook.fileUpload.infrastructure.repository.MediaRepository;
 import org.springframework.core.io.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;

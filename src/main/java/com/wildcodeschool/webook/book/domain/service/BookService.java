@@ -35,7 +35,7 @@ public class BookService {
                 .map(book -> {
                     book.setName(newBook.getName());
                     book.setOwner(newBook.getOwner());
-                    book.setImage(newBook.getImage());
+                    book.setCoverImage(newBook.getCoverImage());
                     book.setAuthor(newBook.getAuthor());
                     book.setEdition(newBook.getEdition());
                     book.setResume(newBook.getResume());

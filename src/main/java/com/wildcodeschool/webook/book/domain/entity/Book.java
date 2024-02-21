@@ -2,6 +2,7 @@ package com.wildcodeschool.webook.book.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wildcodeschool.webook.Auth.domain.entity.User;
+import com.wildcodeschool.webook.fileUpload.domain.entity.Media;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,8 +13,6 @@ public class Book {
     private Long id;
     @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "image", nullable = true)
-    private String image;
     @Column(name = "author", nullable = false)
     private String author;
     @Column(name = "edition", nullable = true)
@@ -28,6 +27,10 @@ public class Book {
     @JoinColumn(name = "owner_id", nullable = false)
     @JsonIgnore
     private User owner;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "image_id")
+    private Media coverImage;
 
     public Long getId() {
         return id;
@@ -45,12 +48,12 @@ public class Book {
         this.name = name;
     }
 
-    public String getImage() {
-        return image;
+    public Media getCoverImage() {
+        return coverImage;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setCoverImage(Media coverImage) {
+        this.coverImage = coverImage;
     }
 
     public String getAuthor() {
@@ -100,4 +103,5 @@ public class Book {
     public void setOwner(User owner) {
         this.owner = owner;
     }
+
 }
