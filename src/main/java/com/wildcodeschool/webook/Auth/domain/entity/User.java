@@ -135,5 +135,11 @@ public class User {
         this.books = books;
     }
 
+    public Media getProfilePicture() {
+        return profilePicture;
+    }
 
+    public void setProfilePicture(Media profilePicture) {
+        this.profilePicture = profilePicture;
+    }
 }

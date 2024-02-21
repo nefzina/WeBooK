@@ -14,28 +14,27 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileUploadController {
     private final UploadService uploadService;
 
-    public FileUploadController(UploadService uploadService){
-       this.uploadService = uploadService;
+    public FileUploadController(UploadService uploadService) {
+        this.uploadService = uploadService;
     }
 
-    @GetMapping("/files/{filename}")
+    @GetMapping("/uploads/{filename}")
     @ResponseBody
     public ResponseEntity<Resource> readOne(@PathVariable String filename) {
-        Resource file = (Resource) uploadService.loadAsResource(filename);
-        if(file==null) return ResponseEntity.notFound().build();
-    return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-            "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+        Resource file = uploadService.loadAsResource(filename);
+        if (file == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
-
-    @ExceptionHandler(UploadedFileNotFoundException.class)
-    public ResponseEntity<?> handleUploadedFileNotFound(UploadedFileNotFoundException e){
-        return ResponseEntity.notFound().build();
-    }
-
 
     @PostMapping("/uploads")
     public ResponseEntity<MediaDTO> fileUpload(@RequestParam("file") MultipartFile file) {
         MediaDTO media = uploadService.store(file);
         return ResponseEntity.status(201).body(media);
+    }
+
+    @ExceptionHandler(UploadedFileNotFoundException.class)
+    public ResponseEntity<?> handleUploadedFileNotFound(UploadedFileNotFoundException e) {
+        return ResponseEntity.notFound().build();
     }
 }
