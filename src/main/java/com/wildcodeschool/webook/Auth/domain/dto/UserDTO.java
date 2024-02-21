@@ -7,13 +7,12 @@ import com.wildcodeschool.webook.Auth.domain.entity.Role;
 import java.util.List;
 
 public record UserDTO(
-        String username,
         String email,
+        String username,
         Number zip_code,
         String city,
         Role role,
         List<Category> preferences,
-        List<Book> books,
-        boolean isEnabled
+        List<Book> books
 ) {
 }

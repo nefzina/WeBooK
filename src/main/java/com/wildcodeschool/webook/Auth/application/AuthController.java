@@ -1,6 +1,7 @@
 package com.wildcodeschool.webook.Auth.application;
 
 import com.wildcodeschool.webook.Auth.domain.dto.UserDTO;
+import com.wildcodeschool.webook.Auth.domain.entity.Token;
 import com.wildcodeschool.webook.Auth.domain.service.JwtService;
 import com.wildcodeschool.webook.Auth.domain.service.UserDetailsServiceImpl;
 import com.wildcodeschool.webook.Auth.domain.service.UserRegistrationService;
@@ -8,6 +9,7 @@ import com.wildcodeschool.webook.Auth.domain.service.UserService;
 import com.wildcodeschool.webook.Auth.domain.entity.User;
 import com.wildcodeschool.webook.Auth.infrastructure.exception.RegistrationErrorException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,11 +34,11 @@ public class AuthController {
         this.userRegistrationService = userRegistrationService;
     }
 
-    @PostMapping("/login")
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE) // produces : renvoyer du json et pas du texte
     public ResponseEntity<?> login(@RequestBody User userBody) throws Exception {
         try {
             userService.login(userBody);
-            String token = jwtService.generateToken(userDetailsService.loadUserByEmail(userBody.getEmail()));
+            Token token = jwtService.generateToken(userDetailsService.loadUserByEmail(userBody.getEmail()));
             return ResponseEntity.ok(token);
 
         } catch (BadCredentialsException e) {

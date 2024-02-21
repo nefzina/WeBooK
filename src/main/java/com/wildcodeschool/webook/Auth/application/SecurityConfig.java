@@ -29,8 +29,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/login", "/register", "/book", "/book/4").permitAll()
-                        .requestMatchers("/users/**")
+                        .requestMatchers("/login", "/register", "/books", "/users/**", "/uploads/**").permitAll()
+                        .requestMatchers("/categories/**")
                         .authenticated()
                 )
                 .csrf((csrf) -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // csrf protection

@@ -19,7 +19,6 @@ public class UserRegistrationService {
         this.bcryptPwEncoder = bcryptPwEncoder;
         this.userMapper = userMapper;
         this.roleService = roleService;
-
     }
 
     public UserDTO registration(User userData) throws Exception {
@@ -28,18 +27,8 @@ public class UserRegistrationService {
         userData.setEnabled(true);
 
         try {
-            System.out.println(userData.getEmail());
-            System.out.println(userData.getPassword());
-            System.out.println(userData.getUsername());
-            System.out.println(userData.getCity());
-            System.out.println(userData.getRole());
-            System.out.println(userData.getZip_code());
-            System.out.println(userData.getBooks());
-
             User user = repository.save(userData);
-
             return userMapper.transformUserEntityInUserDTO(user);
-
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
