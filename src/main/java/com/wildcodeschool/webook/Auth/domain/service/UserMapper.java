@@ -14,7 +14,6 @@ public class UserMapper {
                 user.getCity(),
                 user.getRole(),
                 user.getPreferences(),
-                user.getBooks(),
-                true);
+                user.getBooks());
     }
 }

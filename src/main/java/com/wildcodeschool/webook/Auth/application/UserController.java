@@ -1,27 +1,43 @@
 package com.wildcodeschool.webook.Auth.application;
 
+import com.wildcodeschool.webook.Auth.domain.dto.UserDTO;
 import com.wildcodeschool.webook.Auth.domain.entity.User;
+import com.wildcodeschool.webook.Auth.domain.service.UserMapper;
 import com.wildcodeschool.webook.Auth.domain.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+
 
 @RestController
 public class UserController {
-    UserService userService;
+    private final UserService userService;
+    private final UserMapper userMapper;
 
-    public UserController(UserService userService){
+    public UserController(UserService userService, UserMapper userMapper){
         this.userService = userService;
+        this.userMapper = userMapper;
     }
 
-    @GetMapping("/users")
-    public List<User> readAll(){
-        return userService.getAllUsers();
-    }
+//    @GetMapping("/users")
+//    public List<UserDTO> readAll(){
+//        return userMapper.transformUserEntityInUserDTO(userService.getAllUsers());
+//    }
+
+//    @GetMapping("/users/{id}")
+//    public UserDTO readOne(@PathVariable Long id){
+//        return userMapper.transformUserEntityInUserDTO(userService.getOneUser(id));
+//    }
 
     @GetMapping("/users/{id}")
-    public User readOne(@PathVariable Long id){
-        return userService.getOneUser(id);
+    @ResponseBody
+    public ResponseEntity<?> readOne(@PathVariable Long id){
+//        System.err.println(userMapper.transformUserEntityInUserDTO(userService.getOneUser(id)));
+        UserDTO res = userMapper.transformUserEntityInUserDTO(userService.getOneUser(id));
+        return ResponseEntity.status(200).body(res);
+
     }
 
     @PostMapping("/users")

@@ -24,7 +24,7 @@ public class UserService {
     }
 
     public User getOneUser(Long id) {
-        return repository.findById(id).orElseThrow(() -> new NotFoundException());
+        return repository.findById(id).orElseThrow(NotFoundException::new);
     }
 
     public User createUser(User newUser) {

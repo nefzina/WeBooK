@@ -1,13 +1,14 @@
 package com.wildcodeschool.webook.Auth.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wildcodeschool.webook.Auth.infrastructure.repository.UserRepository;
 import com.wildcodeschool.webook.book.domain.entity.Book;
 import com.wildcodeschool.webook.book.domain.entity.Category;
+import com.wildcodeschool.webook.fileUpload.domain.entity.Media;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 
 import java.util.List;
+
 
 @Entity
 @Table(name = "user")
@@ -49,6 +50,10 @@ public class User {
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
     private List<Book> books;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "picture_id", referencedColumnName = "id")
+    private Media profilePicture;
 
     public long getId() {
         return id;

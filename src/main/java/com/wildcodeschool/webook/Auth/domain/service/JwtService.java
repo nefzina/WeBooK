@@ -1,6 +1,7 @@
 package com.wildcodeschool.webook.Auth.domain.service;
 
 import com.wildcodeschool.webook.Auth.domain.dto.UserPrincipal;
+import com.wildcodeschool.webook.Auth.domain.entity.Token;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -14,17 +15,19 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-    private static String secretKey = "PXdrWTF3JmRvOEV0+OT1lQWU0CjBZbjRrVG9jZG9/LWkpzdiY4QQojV2ZWZEh2YzlDRnhyMUVGYmIKNkU9KlN0Y0FPViFYK0JWSm+1CCmd1b21PYjExTmYkIzUySCZobgpSWCROVUQjRCV/VYUE1Iyo2cCoKT3BiRnZaSDkmZDE3UkNQNnNl";
     public static final long JWT_TOKEN_VALIDITY = 60 * 60; // 1 hour
+    private static String secretKey = "PXdrWTF3JmRvOEV0+OT1lQWU0CjBZbjRrVG9jZG9/LWkpzdiY4QQojV2ZWZEh2YzlDRnhyMUVGYmIKNkU9KlN0Y0FPViFYK0JWSm+1CCmd1b21PYjExTmYkIzUySCZobgpSWCROVUQjRCV/VYUE1Iyo2cCoKT3BiRnZaSDkmZDE3UkNQNnNl";
 
-    public String generateToken(UserPrincipal userPrincipal){
+    public Token generateToken(UserPrincipal userPrincipal) {
         Date now = new Date();
-        return Jwts.builder()
+        Token jwt = new Token();
+        jwt.setToken(Jwts.builder()
                 .subject(userPrincipal.getEmail())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(now.getTime() + JWT_TOKEN_VALIDITY * 1000))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
-                .compact();
+                .compact());
+        return jwt;
     }
 
     private Key getSignInKey() {
@@ -38,7 +41,7 @@ public class JwtService {
 
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimResolver) {
         final Claims claims = getAllClaimsFromToken(token);
-        return  claimResolver.apply(claims);
+        return claimResolver.apply(claims);
     }
 
     private Claims getAllClaimsFromToken(String token) {
