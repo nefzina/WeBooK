@@ -21,32 +21,24 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-//    @GetMapping("/users")
-//    public List<UserDTO> readAll(){
-//        return userMapper.transformUserEntityInUserDTO(userService.getAllUsers());
-//    }
-
-//    @GetMapping("/users/{id}")
-//    public UserDTO readOne(@PathVariable Long id){
-//        return userMapper.transformUserEntityInUserDTO(userService.getOneUser(id));
-//    }
+    @GetMapping("/users")
+    public List<UserDTO> readAll(){
+        return userService.getAllUsers();
+    }
 
     @GetMapping("/users/{id}")
     @ResponseBody
     public ResponseEntity<?> readOne(@PathVariable Long id){
-//        System.err.println(userMapper.transformUserEntityInUserDTO(userService.getOneUser(id)));
-        UserDTO res = userMapper.transformUserEntityInUserDTO(userService.getOneUser(id));
-        return ResponseEntity.status(200).body(res);
-
+        return ResponseEntity.status(200).body(userService.getOneUser(id));
     }
 
     @PostMapping("/users")
-    public User create(@RequestBody User newUser) {
+    public UserDTO create(@RequestBody User newUser) {
         return userService.createUser(newUser);
     }
 
     @PutMapping("/users/{id}")
-    public User edit(@RequestBody User newUser, @PathVariable Long id) {
+    public UserDTO edit(@RequestBody User newUser, @PathVariable Long id) {
         return userService.updateUser(newUser, id);
     }
 

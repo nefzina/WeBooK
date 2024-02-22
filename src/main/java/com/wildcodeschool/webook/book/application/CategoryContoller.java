@@ -16,7 +16,7 @@ public class CategoryContoller {
 
     @GetMapping("/categories")
     List<Category> readAll() {
-        return categoryService.getAllCategory();
+        return categoryService.getAllCategories();
     }
 
     @GetMapping("/categories/{id}")
