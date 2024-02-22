@@ -15,7 +15,7 @@ public class CategoryService {
         this.repository = repository;
     }
 
-    public List<Category> getAllCategory() {
+    public List<Category> getAllCategories() {
         return repository.findAll();
     }
 
@@ -30,7 +30,8 @@ public class CategoryService {
     public Category updateCategory(Category newCategory, Long id){
         return repository.findById(id)
                 .map( category -> {
-                    category.setType(newCategory.getType());
+                    category.setType((newCategory.getType()));
+                    category.setUsers(newCategory.getUsers());
                     return repository.save(category);
                 })
                 .orElseThrow(() -> new NotFoundException());

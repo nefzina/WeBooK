@@ -4,6 +4,9 @@ import com.wildcodeschool.webook.Auth.domain.dto.UserDTO;
 import com.wildcodeschool.webook.Auth.domain.entity.User;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class UserMapper {
     public UserDTO transformUserEntityInUserDTO(User user) {
