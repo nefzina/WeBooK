@@ -35,7 +35,6 @@ public class UserService {
                 .stream()
                 .map(userMapper::transformUserEntityInUserDTO)
                 .toList();
-
     }
 
     public UserDTO getOneUser(Long id) {
