@@ -4,6 +4,7 @@ import com.wildcodeschool.webook.Auth.domain.dto.UserDTO;
 import com.wildcodeschool.webook.Auth.domain.entity.User;
 import com.wildcodeschool.webook.Auth.domain.service.UserMapper;
 import com.wildcodeschool.webook.Auth.domain.service.UserService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,30 +15,28 @@ import java.util.List;
 @RestController
 public class UserController {
     private final UserService userService;
-    private final UserMapper userMapper;
 
-    public UserController(UserService userService, UserMapper userMapper){
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.userMapper = userMapper;
     }
 
-    @GetMapping("/users")
-    public List<UserDTO> readAll(){
+    @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<UserDTO> readAll() {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping(value = "/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> readOne(@PathVariable Long id){
+    public ResponseEntity<?> readOne(@PathVariable Long id) {
         return ResponseEntity.status(200).body(userService.getOneUser(id));
     }
 
-    @PostMapping("/users")
+    @PostMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO create(@RequestBody User newUser) {
         return userService.createUser(newUser);
     }
 
-    @PutMapping("/users/{id}")
+    @PutMapping(value = "/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO edit(@RequestBody User newUser, @PathVariable Long id) {
         return userService.updateUser(newUser, id);
     }

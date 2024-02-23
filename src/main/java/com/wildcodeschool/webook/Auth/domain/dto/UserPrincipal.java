@@ -11,23 +11,27 @@ import java.util.List;
 
 public class UserPrincipal implements UserDetails {
     private final User user;
-    public UserPrincipal(User user){
-        this.user=user;
+
+    public UserPrincipal(User user) {
+        this.user = user;
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities(){
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(user.getRole().getType()));
+        authorities.add(new SimpleGrantedAuthority(
+                user
+                        .getRole()
+                        .getType()));
         return authorities;
     }
 
     @Override
-    public String getPassword(){
+    public String getPassword() {
         return user.getPassword();
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return user.getEmail();
     }
 
@@ -52,7 +56,7 @@ public class UserPrincipal implements UserDetails {
     }
 
     @Override
-    public String getUsername(){
+    public String getUsername() {
         return user.getUsername();
     }
 }

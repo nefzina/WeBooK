@@ -40,6 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
+
         jwt = Arrays.stream(request.getCookies())
                 .filter(cookie -> "token".equals(cookie.getName()))
                 .findFirst()
@@ -47,8 +48,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 .orElse(null);
         email = jwtService.getEmailFromToken(jwt);
 
-        if (email != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserPrincipal userPrincipal = this.userDetailsService.loadUserByEmail(email);
+
             if (jwtService.isTokenValid(jwt, userPrincipal)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userPrincipal,
