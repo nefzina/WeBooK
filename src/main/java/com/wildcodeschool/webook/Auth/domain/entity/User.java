@@ -35,7 +35,7 @@ public class User {
     @Column(name = "isEnabled", nullable = false)
     private Boolean isEnabled;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
     @JsonIgnore
     private Role role;

@@ -15,7 +15,7 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-    public static final long JWT_TOKEN_VALIDITY = 60 * 60; // 1 hour
+    public static final long JWT_TOKEN_VALIDITY = 60L * 60L; // 1 hour
     private static String secretKey = "PXdrWTF3JmRvOEV0+OT1lQWU0CjBZbjRrVG9jZG9/LWkpzdiY4QQojV2ZWZEh2YzlDRnhyMUVGYmIKNkU9KlN0Y0FPViFYK0JWSm+1CCmd1b21PYjExTmYkIzUySCZobgpSWCROVUQjRCV/VYUE1Iyo2cCoKT3BiRnZaSDkmZDE3UkNQNnNl";
 
     public Token generateToken(UserPrincipal userPrincipal) {
@@ -24,7 +24,7 @@ public class JwtService {
         jwt.setToken(Jwts.builder()
                 .subject(userPrincipal.getEmail())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(now.getTime() + JWT_TOKEN_VALIDITY * 1000))
+                .expiration(new Date(now.getTime() + JWT_TOKEN_VALIDITY * 1000L))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact());
         return jwt;
