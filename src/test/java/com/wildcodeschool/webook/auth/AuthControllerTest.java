@@ -25,7 +25,6 @@ public class AuthControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-    private User user;
 
     @Test
     public void testRegister() throws Exception {
@@ -35,7 +34,6 @@ public class AuthControllerTest {
         jo.put("password", "applePie");
         jo.put("zip_code", 31300);
         jo.put("city", "toulouse");
-        jo.put("is_enabled", true);
 
         mockMvc.perform(
                 MockMvcRequestBuilders
@@ -47,7 +45,22 @@ public class AuthControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.username").value("pie"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("apple@mail.com"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.zip_code").value(31300))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.city").value("toulouse"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.is_enabled").value(true));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.city").value("toulouse"));
+    }
+
+    @Test
+    public void testLogin() throws Exception {
+        JSONObject jsonUser = new JSONObject();
+        jsonUser.put("email", "cookie@mail.com");
+        jsonUser.put("password", "aze123-*");
+
+        mockMvc
+                .perform(MockMvcRequestBuilders.post("/login")
+                        .content(jsonUser.toString())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.cookie().exists("token"))
+                .andReturn()
+        ;
     }
 }

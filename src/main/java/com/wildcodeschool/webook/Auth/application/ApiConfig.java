@@ -10,7 +10,7 @@ public class ApiConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Tous les chemins
                 .allowedOrigins("http://localhost:4200") // URL(s) autorisée(s)
-                .allowedMethods("GET", "POST", "PUT", "DELETE") // Méthodes HTTP autorisées
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE") // Méthodes HTTP autorisées
                 .allowCredentials(true)
                 .maxAge(3600);
     }
