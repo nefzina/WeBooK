@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.8'
 services:
   db-webook:
     container_name: db-webook
@@ -10,7 +10,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     ports:
-      - '3307:3306'
+      - '3350:3306'
     volumes:
       - db-webook:/var/lib/mysql
   app:
