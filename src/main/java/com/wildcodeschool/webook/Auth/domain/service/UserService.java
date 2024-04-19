@@ -96,6 +96,7 @@ public class UserService {
 
     public User login(User user) {
         User userEntity = getUserEntityByEmail(user.getEmail());
+
         if (!bcryptPwEncoder.matches(user.getPassword(), userEntity.getPassword())) {
             throw new NotFoundException();
         }
