@@ -53,7 +53,7 @@ public class AuthControllerTest {
     public void testLogin() throws Exception {
         JSONObject jsonUser = new JSONObject();
         jsonUser.put("email", "cookie@mail.com");
-        jsonUser.put("password", "aze123-*");
+        jsonUser.put("password", "Wxc123%$");
 
         mockMvc
                 .perform(MockMvcRequestBuilders.post("/login")
