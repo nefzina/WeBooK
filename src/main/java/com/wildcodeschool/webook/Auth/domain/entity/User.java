@@ -55,6 +55,9 @@ public class User {
     @JoinColumn(name = "picture_id", referencedColumnName = "id")
     private Media profilePicture;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<PasswordToken> passwordTokens;
+
     public long getId() {
         return id;
     }
@@ -141,5 +144,13 @@ public class User {
 
     public void setProfilePicture(Media profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public List<PasswordToken> getPasswordTokens() {
+        return passwordTokens;
+    }
+
+    public void setPasswordTokens(List<PasswordToken> passwordTokens) {
+        this.passwordTokens = passwordTokens;
     }
 }
