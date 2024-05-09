@@ -19,11 +19,7 @@ public class CategoryService {
         return repository.findAll();
     }
 
-    public Category getOneCategory(Long id) {
-        return repository.findById(id).orElseThrow(() -> new NotFoundException());
-    }
-
-    public Category addCategory(Category newCategory, Long id){
+    public Category addCategory(Category newCategory){
         return repository.save(newCategory);
     }
 

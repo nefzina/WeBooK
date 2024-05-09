@@ -6,43 +6,47 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-    @RestController
+@RestController
 
-    public class BookController {
-        BookService bookService;
+public class BookController {
+    BookService bookService;
 
-        public BookController(BookService bookService) {
-            this.bookService = bookService;
-        }
-
-        @GetMapping("/books")
-        public List<Book> readAll() {
-            return bookService.getAllBook();
-        }
-
-        @GetMapping("/books/{id}")
-        public Book searchOne(@PathVariable Long id) {
-            return bookService.getOneBook(id);
-        }
-
-        @PostMapping("/books")
-
-        public Book add(@RequestBody Book newBook) {
-            return bookService.createBook(newBook);
-        }
-
-        @PutMapping("/books/{id}")
-
-        public Book update(@RequestBody Book newBook, @PathVariable Long id) {
-            return bookService.updateBook(newBook, id);
-        }
-
-        @DeleteMapping("/books/{id}")
-
-        public void delete(@PathVariable Long id) {
-            bookService.deleteBook(id);
-        }
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
     }
 
+    @GetMapping("/books")
+    public List<Book> readAll() {
+        return bookService.getAllBook();
+    }
 
+    @GetMapping("/books/{id}")
+    public Book read(@PathVariable Long id) {
+        return bookService.getOneBook(id);
+    }
 
+    @GetMapping("/books/{ownerId}")
+    public List<Book> readByOwnerId(@PathVariable Long ownerId) {
+        return bookService.getBooksByOwner(ownerId);
+    }
+
+    @GetMapping("/books/{categoryId}")
+    public List<Book> readByCategoryId(@PathVariable Long categoryId) {
+        return bookService.getBooksByCategory(categoryId);
+    }
+
+    @PostMapping("/books/{ownerId}")
+    public Book create(@RequestBody Book newBook, @PathVariable Long ownerId) {
+        return bookService.createBook(newBook, ownerId);
+    }
+
+    @PutMapping("/books/{id}")
+    public Book update(@RequestBody Book newBook, @PathVariable Long id) {
+        return bookService.updateBook(newBook, id);
+    }
+
+    @DeleteMapping("/books/{id}")
+    public void delete(@PathVariable Long id) {
+        bookService.deleteBook(id);
+    }
+}

@@ -4,8 +4,10 @@ import com.wildcodeschool.webook.Auth.domain.dto.PasswordDTO;
 import com.wildcodeschool.webook.Auth.domain.dto.UserDTO;
 import com.wildcodeschool.webook.Auth.domain.entity.User;
 import com.wildcodeschool.webook.Auth.infrastructure.exception.NotFoundException;
+import com.wildcodeschool.webook.Auth.infrastructure.exception.WrongDataFormatException;
 import com.wildcodeschool.webook.Auth.infrastructure.repository.UserRepository;
 import com.wildcodeschool.webook.book.domain.entity.Book;
+import com.wildcodeschool.webook.book.domain.service.BookService;
 import com.wildcodeschool.webook.book.domain.service.CategoryService;
 import com.wildcodeschool.webook.book.infrastructure.repository.BookRepository;
 import com.wildcodeschool.webook.book.infrastructure.repository.CategoryRepository;
@@ -14,22 +16,24 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 @Service
 public class UserService {
     private final UserRepository repository;
     private final BCryptPasswordEncoder bcryptPwEncoder;
     private final UserMapper userMapper;
-    private final BookRepository bookRepository;
+    private final BookService bookService;
     private final CategoryService categoryService;
+    private final DataValidationService dataValidationService;
 
-    public UserService(UserRepository repository, BCryptPasswordEncoder bcryptPwEncoder, UserMapper userMapper,
-                       BookRepository bookRepository, CategoryService categoryService) {
+    public UserService(UserRepository repository, BCryptPasswordEncoder bcryptPwEncoder, UserMapper userMapper, BookService bookService, CategoryService categoryService, DataValidationService dataValidationService) {
         this.repository = repository;
         this.bcryptPwEncoder = bcryptPwEncoder;
         this.userMapper = userMapper;
-        this.bookRepository = bookRepository;
+        this.bookService = bookService;
         this.categoryService = categoryService;
+        this.dataValidationService = dataValidationService;
     }
 
     public List<UserDTO> getAllUsers() {
@@ -52,16 +56,14 @@ public class UserService {
     public UserDTO updateUser(User newUser, Long id) {
         return repository.findById(id)
                 .map(user -> {
-                    user.setUsername(newUser.getUsername());
-                    user.setCity(newUser.getCity());
-                    user.setZip_code(newUser.getZip_code());
+                    if (dataValidationService.UsernameValidation(newUser.getUsername())) {
+                        user.setUsername(newUser.getUsername());
+                    } else throw new WrongDataFormatException("Username");
+                    if (dataValidationService.ZipCodeValidation(newUser.getZip_code())) {
+                        user.setZip_code(newUser.getZip_code());
+                    } else throw new WrongDataFormatException("Zip-code");
 
-                    if (!newUser.getBooks().isEmpty()) {
-                        for (Book book : newUser.getBooks()) {
-                            book.setOwner(user);
-                            bookRepository.save(book);
-                        }
-                    }
+                    user.setCity(newUser.getCity());
 
                     if (!newUser.getPreferences().isEmpty()) {
                         newUser.getPreferences()
@@ -73,21 +75,18 @@ public class UserService {
     }
 
     public HttpStatus updatePassword(PasswordDTO passwords, Long id) {
-        String userOldPw = repository.findById(id)
-                .map(user -> user.getPassword())
-                .orElseThrow(NotFoundException::new);
-        if (!bcryptPwEncoder.matches(passwords.oldPassword(), userOldPw)) {
-            throw new NotFoundException();
-        }
-        String hashedNewPassword = bcryptPwEncoder.encode(passwords.newPassword());
+        if (!dataValidationService.PasswordValidation(passwords.newPassword()))
+            throw new WrongDataFormatException("Password");
+        User userData = repository.findById(id).orElseThrow(NotFoundException::new);
 
-        return repository.findById(id)
-                .map(user -> {
-                    user.setPassword(hashedNewPassword);
-                    repository.save(user);
-                    return HttpStatus.OK;
-                })
-                .orElseThrow(NotFoundException::new);
+        if (!bcryptPwEncoder.matches(passwords.oldPassword(), userData.getPassword())) {
+            throw new NotFoundException(); // ToDo : change exception
+        }
+
+        String hashedNewPassword = bcryptPwEncoder.encode(passwords.newPassword());
+        userData.setPassword(hashedNewPassword);
+        repository.save(userData);
+        return HttpStatus.OK;
     }
 
     public void deleteUser(Long id) {
