@@ -18,6 +18,9 @@ public class Category {
     @ManyToMany(mappedBy = "preferences", cascade = CascadeType.REMOVE)
     private List<User> users;
 
+    @OneToMany(mappedBy = "bookCategory", cascade = CascadeType.REFRESH)
+    private List<Book> books;
+
     public Long getId() {
         return id;
     }

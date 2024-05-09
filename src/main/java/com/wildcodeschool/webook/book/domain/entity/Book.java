@@ -32,6 +32,11 @@ public class Book {
     @JoinColumn(name = "image_id")
     private Media coverImage;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, optional = false)
+    @JoinColumn(name = "category_id", nullable = false)
+    @JsonIgnore
+    private Category bookCategory;
+
     public Long getId() {
         return id;
     }
@@ -104,4 +109,11 @@ public class Book {
         this.owner = owner;
     }
 
+    public Category getBookCategory() {
+        return bookCategory;
+    }
+
+    public void setBookCategory(Category bookCategory) {
+        this.bookCategory = bookCategory;
+    }
 }
