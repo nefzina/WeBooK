@@ -6,32 +6,26 @@ import com.wildcodeschool.webook.Auth.domain.entity.User;
 import com.wildcodeschool.webook.Auth.infrastructure.exception.NotFoundException;
 import com.wildcodeschool.webook.Auth.infrastructure.exception.WrongDataFormatException;
 import com.wildcodeschool.webook.Auth.infrastructure.repository.UserRepository;
-import com.wildcodeschool.webook.book.domain.entity.Book;
 import com.wildcodeschool.webook.book.domain.service.BookService;
 import com.wildcodeschool.webook.book.domain.service.CategoryService;
-import com.wildcodeschool.webook.book.infrastructure.repository.BookRepository;
-import com.wildcodeschool.webook.book.infrastructure.repository.CategoryRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.zip.DataFormatException;
 
 @Service
 public class UserService {
     private final UserRepository repository;
     private final BCryptPasswordEncoder bcryptPwEncoder;
     private final UserMapper userMapper;
-    private final BookService bookService;
     private final CategoryService categoryService;
     private final DataValidationService dataValidationService;
 
-    public UserService(UserRepository repository, BCryptPasswordEncoder bcryptPwEncoder, UserMapper userMapper, BookService bookService, CategoryService categoryService, DataValidationService dataValidationService) {
+    public UserService(UserRepository repository, BCryptPasswordEncoder bcryptPwEncoder, UserMapper userMapper, CategoryService categoryService, DataValidationService dataValidationService) {
         this.repository = repository;
         this.bcryptPwEncoder = bcryptPwEncoder;
         this.userMapper = userMapper;
-        this.bookService = bookService;
         this.categoryService = categoryService;
         this.dataValidationService = dataValidationService;
     }

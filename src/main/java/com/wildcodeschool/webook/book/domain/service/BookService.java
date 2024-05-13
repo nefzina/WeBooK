@@ -2,10 +2,10 @@ package com.wildcodeschool.webook.book.domain.service;
 
 import com.wildcodeschool.webook.Auth.domain.entity.User;
 import com.wildcodeschool.webook.Auth.domain.service.DataValidationService;
-import com.wildcodeschool.webook.Auth.domain.service.UserService;
 import com.wildcodeschool.webook.Auth.infrastructure.exception.WrongDataFormatException;
 import com.wildcodeschool.webook.Auth.infrastructure.repository.UserRepository;
 import com.wildcodeschool.webook.book.domain.entity.Book;
+import com.wildcodeschool.webook.book.domain.entity.Category;
 import com.wildcodeschool.webook.book.infrastructure.repository.BookRepository;
 import com.wildcodeschool.webook.book.infrastructure.exception.NotFoundException;
 import org.springframework.stereotype.Service;
@@ -19,11 +19,13 @@ public class BookService {
     private final BookRepository repository;
     private final DataValidationService dataValidationService;
     private final UserRepository userRepository;
+    private final CategoryService categoryService;
 
-    public BookService(BookRepository repository, DataValidationService dataValidationService, UserRepository userRepository) {
+    public BookService(BookRepository repository, DataValidationService dataValidationService, UserRepository userRepository, CategoryService categoryService) {
         this.repository = repository;
         this.dataValidationService = dataValidationService;
         this.userRepository = userRepository;
+        this.categoryService = categoryService;
     }
 
     public List<Book> getAllBook() {
@@ -36,11 +38,13 @@ public class BookService {
     }
 
     public List<Book> getBooksByOwner(Long ownerId) {
-        return repository.findBooksByBookCategory(ownerId);
+        User user = userRepository.findById(ownerId).orElseThrow(NotFoundException::new);
+        return repository.findBooksByOwner(user);
     }
 
     public List<Book> getBooksByCategory(Long categoryId) {
-        return repository.findBooksByBookCategory(categoryId);
+        Category category = categoryService.getOneCategory(categoryId);
+        return repository.findBooksByBookCategory(category);
     }
 
     public Book createBook(Book newBook, Long ownerId) {
