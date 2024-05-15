@@ -1,18 +1,18 @@
 version: '3.3'
 services:
-  db-mysql-spring-ci:
-    container_name: db-mysql-spring-ci
+  db-webook:
+    container_name: db-webook
     image: mysql
     restart: always
     environment:
-      MYSQL_DATABASE: 'spring_docker_ci'
-      MYSQL_USER: 'root'
-      MYSQL_PASSWORD: 'root'
-      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'webook'
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     ports:
-      - '3307:3306'
+      - '3350:3306'
     volumes:
-      - db-mysql-spring-ci:/var/lib/mysql
+      - db-webook:/var/lib/mysql
   app:
     build:
       context: .
@@ -20,15 +20,15 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db-mysql-spring-ci:3306/spring_docker_ci
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db-webook:3306/webook
+      - SPRING_DATASOURCE_USERNAME=alexandra
+      - SPRING_DATASOURCE_PASSWORD=alexandra
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     depends_on:
-      - db-mysql-spring-ci
+      - db-webook
     volumes:
       - .:/app
       - ~/.m2:/root/.m2
 
 volumes:
-  db-mysql-spring-ci:
+  db-webook:

@@ -26,10 +26,10 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "zipCode", nullable = true)
-    private Number zip_code;
+    @Column(name = "zipCode", length = 5)
+    private String zip_code;
 
-    @Column(name = "city", nullable = false, length = 10)
+    @Column(name = "city",  length = 10)
     private String city;
 
     @Column(name = "isEnabled", nullable = false)
@@ -54,6 +54,9 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "picture_id", referencedColumnName = "id")
     private Media profilePicture;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<PasswordToken> passwordTokens;
 
     public long getId() {
         return id;
@@ -87,11 +90,11 @@ public class User {
         this.password = password;
     }
 
-    public Number getZip_code() {
+    public String getZip_code() {
         return zip_code;
     }
 
-    public void setZip_code(Number zip_code) {
+    public void setZip_code(String zip_code) {
         this.zip_code = zip_code;
     }
 
@@ -141,5 +144,13 @@ public class User {
 
     public void setProfilePicture(Media profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public List<PasswordToken> getPasswordTokens() {
+        return passwordTokens;
+    }
+
+    public void setPasswordTokens(List<PasswordToken> passwordTokens) {
+        this.passwordTokens = passwordTokens;
     }
 }
