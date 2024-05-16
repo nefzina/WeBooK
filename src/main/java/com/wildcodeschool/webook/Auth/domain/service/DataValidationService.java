@@ -26,7 +26,7 @@ public class DataValidationService implements IDataValidationService {
 
     @Override
     public boolean UsernameValidation(String username) {
-        return Pattern.compile(" ^[a-zA-Z_.]{2,20}$", Pattern.CASE_INSENSITIVE)
+        return Pattern.compile("^[a-zA-Z_.]{2,20}$", Pattern.CASE_INSENSITIVE)
                 .matcher(username)
                 .matches();
     }

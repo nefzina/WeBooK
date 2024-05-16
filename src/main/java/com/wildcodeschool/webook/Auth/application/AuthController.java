@@ -54,7 +54,7 @@ public class AuthController {
     public ResponseEntity<?> register(@RequestBody User userBody) throws RegistrationErrorException {
         try {
             UserDTO res = userRegistrationService.registration(userBody);
-            return ResponseEntity.status(201).body(res);
+            return ResponseEntity.status(HttpStatus.CREATED).body(res);
 
         } catch (Exception e) {
             throw new RegistrationErrorException(e.getMessage());

@@ -34,8 +34,6 @@ public class UserRegistrationService {
         if (!dataValidationService.EmailValidation(userData.getEmail())) throw new WrongDataFormatException("Email");
         if (!dataValidationService.UsernameValidation(userData.getUsername()))
             throw new WrongDataFormatException("Username");
-        if (!dataValidationService.ZipCodeValidation(userData.getZip_code()))
-            throw new WrongDataFormatException("Zip-code");
 
         try {
             User user = repository.save(userData);
