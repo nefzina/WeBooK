@@ -16,7 +16,6 @@ import java.util.List;
 
 
 @Service
-
 public class BookService {
     private final BookRepository repository;
     private final DataValidationService dataValidationService;

@@ -6,7 +6,7 @@ import com.wildcodeschool.webook.Auth.domain.entity.User;
 import com.wildcodeschool.webook.Auth.infrastructure.exception.NotFoundException;
 import com.wildcodeschool.webook.Auth.infrastructure.exception.WrongDataFormatException;
 import com.wildcodeschool.webook.Auth.infrastructure.repository.UserRepository;
-import com.wildcodeschool.webook.book.domain.service.BookService;
+
 import com.wildcodeschool.webook.book.domain.service.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
