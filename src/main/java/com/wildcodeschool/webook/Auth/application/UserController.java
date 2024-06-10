@@ -31,8 +31,6 @@ public class UserController {
     @GetMapping(value = "/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<?> readOne(@PathVariable Long id) {
-
-        System.err.println(id);
         return ResponseEntity.status(200).body(userService.getOneUser(id));
     }
 
