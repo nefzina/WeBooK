@@ -38,12 +38,12 @@ public class AuthController {
     // produces : renvoyer du json et pas du texte
     public ResponseEntity<?> login(@RequestBody User userBody) throws Exception {
         try {
-            userService.login(userBody);
+            Long userId = userService.login(userBody);
             Token token = jwtService.generateToken(userDetailsService.loadUserByEmail(userBody.getEmail()));
 
             return ResponseEntity.ok()
                     .header(HttpHeaders.SET_COOKIE, cookieService.createCookie(token).toString())
-                    .build();
+                    .body(userId);
 
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

@@ -87,14 +87,14 @@ public class UserService {
         repository.deleteById(id);
     }
 
-    public User login(User user) {
+    public Long login(User user) {
         User userEntity = getUserEntityByEmail(user.getEmail());
 
         if (!bcryptPwEncoder.matches(user.getPassword(), userEntity.getPassword())) {
             throw new NotFoundException();
         }
-        user.setRole(userEntity.getRole());
-        return user;
+//        user.setRole(userEntity.getRole());
+        return userEntity.getId();
     }
 
     public User getUserEntityByEmail(String email) {
