@@ -29,7 +29,7 @@ public class User {
     @Column(name = "zipCode", length = 5)
     private String zip_code;
 
-    @Column(name = "city", length = 10)
+    @Column(name = "city",  length = 10)
     private String city;
 
     @Column(name = "isEnabled", nullable = false)

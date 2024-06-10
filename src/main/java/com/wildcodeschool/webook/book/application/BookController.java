@@ -3,6 +3,8 @@ package com.wildcodeschool.webook.book.application;
 import com.wildcodeschool.webook.book.domain.entity.Book;
 import com.wildcodeschool.webook.book.domain.service.BookService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.MediaType;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -35,9 +37,14 @@ public class BookController {
         return bookService.getBooksByCategory(categoryId);
     }
 
-    @PostMapping("/books/{ownerId}")
-    public Book create(@RequestBody Book newBook, @PathVariable Long ownerId) {
-        return bookService.createBook(newBook, ownerId);
+    @PostMapping(value = "/books/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Book create(@RequestPart("newBook") Book newBook,
+                       @RequestPart("coverImage") MultipartFile coverImage)
+    {
+        // Traitement de la nouvelle image
+        // Enregistrement de l'image dans votre système de stockage
+        // Liaison de l'image à l'objet Book
+        return bookService.createBook(newBook);
     }
 
     @PutMapping("/books/{id}")

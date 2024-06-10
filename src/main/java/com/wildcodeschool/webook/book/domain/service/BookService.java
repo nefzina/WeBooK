@@ -1,7 +1,9 @@
 package com.wildcodeschool.webook.book.domain.service;
 
 import com.wildcodeschool.webook.Auth.domain.entity.User;
+import com.wildcodeschool.webook.Auth.domain.service.CookieService;
 import com.wildcodeschool.webook.Auth.domain.service.DataValidationService;
+import com.wildcodeschool.webook.Auth.domain.service.JwtAuthenticationFilter;
 import com.wildcodeschool.webook.Auth.infrastructure.exception.WrongDataFormatException;
 import com.wildcodeschool.webook.Auth.infrastructure.repository.UserRepository;
 import com.wildcodeschool.webook.book.domain.entity.Book;
@@ -14,18 +16,21 @@ import java.util.List;
 
 
 @Service
-
 public class BookService {
     private final BookRepository repository;
     private final DataValidationService dataValidationService;
     private final UserRepository userRepository;
     private final CategoryService categoryService;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CookieService cookieService;
 
-    public BookService(BookRepository repository, DataValidationService dataValidationService, UserRepository userRepository, CategoryService categoryService) {
+    public BookService(BookRepository repository, DataValidationService dataValidationService, UserRepository userRepository, CategoryService categoryService, JwtAuthenticationFilter jwtAuthenticationFilter, CookieService cookieService) {
         this.repository = repository;
         this.dataValidationService = dataValidationService;
         this.userRepository = userRepository;
         this.categoryService = categoryService;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.cookieService = cookieService;
     }
 
     public List<Book> getAllBook() {
@@ -47,10 +52,9 @@ public class BookService {
         return repository.findBooksByBookCategory(category);
     }
 
-    public Book createBook(Book newBook, Long ownerId) {
+    public Book createBook(Book newBook) {
         if (dataValidationService.BookDataValidation(newBook)) {
-            User owner = userRepository.findById(ownerId).orElseThrow(NotFoundException::new);
-            newBook.setOwner(owner);
+            newBook.setOwner(cookieService.getUserByCookie());
             return repository.save(newBook);
         } else throw new WrongDataFormatException("Book name, author or ISBN");
     }
