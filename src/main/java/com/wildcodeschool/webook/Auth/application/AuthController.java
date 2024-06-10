@@ -38,12 +38,12 @@ public class AuthController {
     // produces : renvoyer du json et pas du texte
     public ResponseEntity<?> login(@RequestBody User userBody) throws Exception {
         try {
-            userService.login(userBody);
+            Long userId = userService.login(userBody);
             Token token = jwtService.generateToken(userDetailsService.loadUserByEmail(userBody.getEmail()));
 
             return ResponseEntity.ok()
                     .header(HttpHeaders.SET_COOKIE, cookieService.createCookie(token).toString())
-                    .build();
+                    .body(userId);
 
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -54,7 +54,7 @@ public class AuthController {
     public ResponseEntity<?> register(@RequestBody User userBody) throws RegistrationErrorException {
         try {
             UserDTO res = userRegistrationService.registration(userBody);
-            return ResponseEntity.status(201).body(res);
+            return ResponseEntity.status(HttpStatus.CREATED).body(res);
 
         } catch (Exception e) {
             throw new RegistrationErrorException(e.getMessage());

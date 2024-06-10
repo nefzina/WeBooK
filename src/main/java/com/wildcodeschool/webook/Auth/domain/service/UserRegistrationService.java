@@ -35,7 +35,6 @@ public class UserRegistrationService {
         if (!dataValidationService.UsernameValidation(userData.getUsername()))
             throw new WrongDataFormatException("Username");
 
-
         try {
             User user = repository.save(userData);
             return userMapper.transformUserEntityInUserDTO(user);
