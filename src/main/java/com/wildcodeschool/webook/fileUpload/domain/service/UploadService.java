@@ -58,7 +58,6 @@ public class UploadService implements IUploadService {
 
             String cleanedFilename = this.cleanFilename(file.getOriginalFilename());
             String cleanedUniqueFilename = "";
-            System.err.println(cleanedFilename);
 
             // seperate the filename from its extension to insert the uuid in between
             int lastDotIndex = cleanedFilename.lastIndexOf('.');
