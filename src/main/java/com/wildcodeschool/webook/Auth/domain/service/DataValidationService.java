@@ -40,11 +40,11 @@ public class DataValidationService implements IDataValidationService {
 
     @Override
     public boolean BookDataValidation(Book book) {
-        Boolean isNameValid = Pattern.compile("^[a-zA-Z]{2,50}$", Pattern.CASE_INSENSITIVE)
+        Boolean isNameValid = Pattern.compile("^(?!\\s*$)[a-zA-Z\\s]{2,50}$", Pattern.CASE_INSENSITIVE)
                 .matcher(book.getName())
                 .matches();
 
-        Boolean isAuthorValid = Pattern.compile("^[a-zA-Z]{5,35}$", Pattern.CASE_INSENSITIVE)
+        Boolean isAuthorValid = Pattern.compile("^(?!\\s*$)[a-zA-Z\\s]{5,35}$", Pattern.CASE_INSENSITIVE)
                 .matcher(book.getAuthor())
                 .matches();
 
