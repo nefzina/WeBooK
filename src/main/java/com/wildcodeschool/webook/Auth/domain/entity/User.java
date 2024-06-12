@@ -1,6 +1,7 @@
 package com.wildcodeschool.webook.Auth.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.wildcodeschool.webook.book.domain.entity.Book;
 import com.wildcodeschool.webook.book.domain.entity.Category;
 import com.wildcodeschool.webook.fileUpload.domain.entity.Media;
@@ -15,7 +16,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "username", nullable = false, length = 20)
     private String username;
@@ -29,7 +30,7 @@ public class User {
     @Column(name = "zipCode", length = 5)
     private String zip_code;
 
-    @Column(name = "city",  length = 10)
+    @Column(name = "city", length = 10)
     private String city;
 
     @Column(name = "isEnabled", nullable = false)
@@ -48,6 +49,7 @@ public class User {
     )
     private List<Category> preferences;
 
+    @JsonManagedReference(value="user-books")
     @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
     private List<Book> books;
 
@@ -58,11 +60,11 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<PasswordToken> passwordTokens;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

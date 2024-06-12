@@ -1,6 +1,8 @@
 package com.wildcodeschool.webook.book.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.wildcodeschool.webook.Auth.domain.entity.User;
 import com.wildcodeschool.webook.fileUpload.domain.entity.Media;
 import jakarta.persistence.*;
@@ -23,15 +25,17 @@ public class Book {
     private String resume;
     @Column(name = "ISBN", nullable = true)
     private String isbn;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, optional = false)
+
+    @JsonBackReference(value="user-books")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, optional = false)
     @JoinColumn(name = "owner_id", nullable = false)
-    @JsonIgnore
     private User owner;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "image_id")
     private Media coverImage;
 
+    @JsonBackReference(value="book-category")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
     private Category bookCategory;
