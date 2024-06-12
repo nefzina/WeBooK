@@ -1,5 +1,6 @@
 package com.wildcodeschool.webook.book.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wildcodeschool.webook.Auth.domain.entity.User;
 import jakarta.persistence.*;
 
@@ -15,9 +16,11 @@ public class Category {
     @Column(name = "category", nullable = false)
     private String type;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "preferences", cascade = CascadeType.REMOVE)
     private List<User> users;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "bookCategory", cascade = CascadeType.REFRESH)
     private List<Book> books;
 
