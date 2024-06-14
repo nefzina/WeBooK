@@ -2,6 +2,7 @@ package com.wildcodeschool.webook.fileUpload.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.wildcodeschool.webook.Auth.domain.entity.User;
 import com.wildcodeschool.webook.book.domain.entity.Book;
 import jakarta.persistence.*;
@@ -31,11 +32,11 @@ public class Media {
         this.id = id;
     }
 
-    public String getFileName() {
+    public String getFilename() {
         return filename;
     }
 
-    public void setFileName(String filename) {
+    public void setFilename(String filename) {
         this.filename = filename;
     }
 

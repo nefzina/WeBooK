@@ -42,11 +42,6 @@ public class BookController {
 //                       @RequestPart("coverImage") MultipartFile coverImage)
     public Book create(@RequestBody Book newBook)
     {
-        System.out.println(newBook);
-//        System.err.println(newBook.getCoverImage().getFileName());
-//        System.err.println(newBook.getBookCategory().getId());
-//        System.err.println(newBook.getBookCategory().getType());
-
         // Traitement de la nouvelle image
         // Enregistrement de l'image dans votre système de stockage
         // Liaison de l'image à l'objet Book
