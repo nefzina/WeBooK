@@ -80,7 +80,7 @@ public class UploadService implements IUploadService {
 
             // Créez et configurez l'objet Media avec le nom de fichier nettoyé, faire DTO
             Media media = new Media();
-            media.setFileName(cleanedUniqueFilename);
+            media.setFilename(cleanedUniqueFilename);
 
             return mediaMapper.transformMediaEntityIntoMediaDTO(this.mediaRepository.save(media));
         } catch (IOException e) {

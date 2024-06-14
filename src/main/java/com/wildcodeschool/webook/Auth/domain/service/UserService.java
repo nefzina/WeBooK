@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserService {
@@ -53,16 +54,21 @@ public class UserService {
                     if (dataValidationService.UsernameValidation(newUser.getUsername())) {
                         user.setUsername(newUser.getUsername());
                     } else throw new WrongDataFormatException("Username");
-                    if (dataValidationService.ZipCodeValidation(newUser.getZip_code())) {
-                        user.setZip_code(newUser.getZip_code());
-                    } else throw new WrongDataFormatException("Zip-code");
+
+                    if (newUser.getZip_code() != null) {
+                        if (dataValidationService.ZipCodeValidation(newUser.getZip_code())) {
+                            user.setZip_code(newUser.getZip_code());
+                        } else throw new WrongDataFormatException("Zip-code");
+                    }
 
                     user.setCity(newUser.getCity());
+                    System.out.println(newUser.getProfilePicture().getFilename());
+                    user.setProfilePicture(newUser.getProfilePicture());
 
-                    if (!newUser.getPreferences().isEmpty()) {
-                        newUser.getPreferences()
-                                .stream().map(preference -> categoryService.updateCategory(preference, preference.getId()));
-                    }
+//                    if (!newUser.getPreferences().isEmpty()) {
+//                        newUser.getPreferences()
+//                                .stream().map(preference -> categoryService.updateCategory(preference, preference.getId()));
+//                    }
                     return userMapper.transformUserEntityInUserDTO(repository.save(user));
                 })
                 .orElseThrow(NotFoundException::new);
