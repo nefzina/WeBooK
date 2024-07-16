@@ -1,6 +1,7 @@
 package com.wildcodeschool.webook.Auth.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.wildcodeschool.webook.book.domain.entity.Book;
 import com.wildcodeschool.webook.book.domain.entity.Category;
@@ -50,7 +51,7 @@ public class User {
     private List<Category> preferences;
 
     @JsonManagedReference(value="user-books")
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Book> books;
 
     @OneToOne(cascade = CascadeType.ALL)
