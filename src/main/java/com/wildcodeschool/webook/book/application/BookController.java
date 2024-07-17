@@ -56,7 +56,10 @@ public class BookController {
 
 
     @PutMapping("/books/{id}")
-    public Book update(@RequestBody Book newBook, @PathVariable Long id) {
+    public Book update(@RequestBody Book newBook, @PathVariable Long id)
+
+    {
+        System.err.println(newBook.getOwner());
         return bookService.updateBook(newBook, id);
     }
 

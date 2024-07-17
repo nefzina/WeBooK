@@ -69,7 +69,7 @@ public class BookService {
             return repository.findById(id)
                     .map(book -> {
                         book.setName(newBook.getName());
-                        book.setOwner(newBook.getOwner());
+                       // book.setOwner(newBook.getOwner());
                         book.setCoverImage(newBook.getCoverImage());
                         book.setAuthor(newBook.getAuthor());
                         book.setEdition(newBook.getEdition());
