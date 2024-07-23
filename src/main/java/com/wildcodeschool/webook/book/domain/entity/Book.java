@@ -36,7 +36,7 @@ public class Book {
     private Media coverImage;
 
     @JsonBackReference(value="book-category")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
     private Category bookCategory;
 

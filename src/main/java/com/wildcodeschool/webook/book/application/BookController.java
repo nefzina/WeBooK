@@ -27,12 +27,12 @@ public class BookController {
         return bookService.getOneBook(id);
     }
 
-    @GetMapping("/books/{ownerId}")
+    @GetMapping("/books/owner/{ownerId}")
     public List<Book> readByOwnerId(@PathVariable Long ownerId) {
         return bookService.getBooksByOwner(ownerId);
     }
 
-    @GetMapping("/books/{categoryId}")
+    @GetMapping("/books/category/{categoryId}")
     public List<Book> readByCategoryId(@PathVariable Long categoryId) {
         return bookService.getBooksByCategory(categoryId);
     }

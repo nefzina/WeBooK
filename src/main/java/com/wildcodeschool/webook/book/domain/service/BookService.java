@@ -38,6 +38,9 @@ public class BookService {
     }
 
     public Book getOneBook(Long id) {
+        System.err.println(id);
+        System.err.println(repository.findById(id));
+
         return repository.findById(id)
                 .orElseThrow(NotFoundException::new);
     }
