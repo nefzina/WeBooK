@@ -2,6 +2,7 @@ package com.wildcodeschool.webook.Auth.domain.service;
 
 import com.wildcodeschool.webook.Auth.domain.dto.PasswordDTO;
 import com.wildcodeschool.webook.Auth.domain.dto.UserDTO;
+import com.wildcodeschool.webook.Auth.domain.dto.UserLoginDTO;
 import com.wildcodeschool.webook.Auth.domain.entity.User;
 import com.wildcodeschool.webook.Auth.infrastructure.exception.NotFoundException;
 import com.wildcodeschool.webook.Auth.infrastructure.exception.WrongDataFormatException;
@@ -65,10 +66,9 @@ public class UserService {
                     System.out.println(newUser.getProfilePicture().getFilename());
                     user.setProfilePicture(newUser.getProfilePicture());
 
-//                    if (!newUser.getPreferences().isEmpty()) {
-//                        newUser.getPreferences()
-//                                .stream().map(preference -> categoryService.updateCategory(preference, preference.getId()));
-//                    }
+                    if (!newUser.getPreferences().isEmpty()) {
+                        user.setPreferences(newUser.getPreferences());
+                    }
                     return userMapper.transformUserEntityInUserDTO(repository.save(user));
                 })
                 .orElseThrow(NotFoundException::new);
@@ -93,14 +93,13 @@ public class UserService {
         repository.deleteById(id);
     }
 
-    public Long login(User user) {
+    public UserLoginDTO login(User user) {
         User userEntity = getUserEntityByEmail(user.getEmail());
 
         if (!bcryptPwEncoder.matches(user.getPassword(), userEntity.getPassword())) {
             throw new NotFoundException();
         }
-//        user.setRole(userEntity.getRole());
-        return userEntity.getId();
+        return userMapper.transformUserEntityInUserLoginDTO(userEntity);
     }
 
     public User getUserEntityByEmail(String email) {

@@ -1,6 +1,7 @@
 package com.wildcodeschool.webook.Auth.application;
 
 import com.wildcodeschool.webook.Auth.domain.dto.UserDTO;
+import com.wildcodeschool.webook.Auth.domain.dto.UserLoginDTO;
 import com.wildcodeschool.webook.Auth.domain.entity.Token;
 import com.wildcodeschool.webook.Auth.domain.service.*;
 import com.wildcodeschool.webook.Auth.domain.entity.User;
@@ -38,12 +39,12 @@ public class AuthController {
     // produces : renvoyer du json et pas du texte
     public ResponseEntity<?> login(@RequestBody User userBody) throws Exception {
         try {
-            Long userId = userService.login(userBody);
+            UserLoginDTO user = userService.login(userBody);
             Token token = jwtService.generateToken(userDetailsService.loadUserByEmail(userBody.getEmail()));
 
             return ResponseEntity.ok()
                     .header(HttpHeaders.SET_COOKIE, cookieService.createCookie(token).toString())
-                    .body(userId);
+                    .body(user);
 
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

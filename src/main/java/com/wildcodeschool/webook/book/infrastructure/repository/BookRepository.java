@@ -11,4 +11,5 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<Book, Long> {
 List<Book> findBooksByBookCategory(Category bookCategory);
 List<Book> findBooksByOwner(User owner);
+List<Book> findBooksByNameIsContainingIgnoreCaseAndAuthorIsContainingIgnoreCase(String name, String author);
 }
