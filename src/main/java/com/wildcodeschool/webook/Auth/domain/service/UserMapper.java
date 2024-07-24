@@ -3,6 +3,7 @@ package com.wildcodeschool.webook.Auth.domain.service;
 import com.wildcodeschool.webook.Auth.domain.dto.UserDTO;
 import com.wildcodeschool.webook.Auth.domain.dto.UserLoginDTO;
 import com.wildcodeschool.webook.Auth.domain.entity.User;
+import com.wildcodeschool.webook.fileUpload.domain.dto.MediaDTO;
 import com.wildcodeschool.webook.fileUpload.domain.service.MediaMapper;
 import org.springframework.stereotype.Service;
 
@@ -28,10 +29,14 @@ public class UserMapper {
     }
 
     public UserLoginDTO transformUserEntityInUserLoginDTO(User user) {
+        MediaDTO profilePictureDTO = null;
+        if (user.getProfilePicture() != null) {
+            profilePictureDTO = this.mediaMapper.transformMediaEntityIntoMediaDTO(user.getProfilePicture());
+        }
         return new UserLoginDTO(
                 user.getId(),
                 user.getRole(),
                 user.getUsername(),
-                this.mediaMapper.transformMediaEntityIntoMediaDTO(user.getProfilePicture()));
+                profilePictureDTO);
     }
 }
