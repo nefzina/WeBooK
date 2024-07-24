@@ -2,6 +2,7 @@ package com.wildcodeschool.webook.book.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.wildcodeschool.webook.Auth.domain.entity.User;
 import com.wildcodeschool.webook.fileUpload.domain.entity.Media;
@@ -35,8 +36,10 @@ public class Book {
     @JoinColumn(name = "image_id")
     private Media coverImage;
 
-    @JsonBackReference(value="book-category")
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, optional = false)
+    @JsonIgnoreProperties("books") // Ignore la propriété 'books' dans 'Category' pour éviter la récursion
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, optional = false)
+    // @JsonBackReference(value="book-category") // Si je mets ça en commentaire, impossible de se connecter mais on voit la catégorie
+    // @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
     private Category bookCategory;
 

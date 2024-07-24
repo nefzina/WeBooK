@@ -1,6 +1,7 @@
 package com.wildcodeschool.webook.book.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.wildcodeschool.webook.Auth.domain.entity.User;
 import jakarta.persistence.*;
@@ -21,7 +22,8 @@ public class Category {
     @ManyToMany(mappedBy = "preferences", cascade = CascadeType.REMOVE)
     private List<User> users;
 
-    @JsonManagedReference(value="book-category")
+    @JsonIgnoreProperties("book-category")
+    //@JsonManagedReference(value="book-category")
     @OneToMany(mappedBy = "bookCategory", cascade = CascadeType.REFRESH)
     private List<Book> books;
 

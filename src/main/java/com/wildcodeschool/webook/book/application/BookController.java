@@ -2,6 +2,10 @@ package com.wildcodeschool.webook.book.application;
 
 import com.wildcodeschool.webook.book.domain.entity.Book;
 import com.wildcodeschool.webook.book.domain.service.BookService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,14 +46,20 @@ public class BookController {
 //                       @RequestPart("coverImage") MultipartFile coverImage)
     public Book create(@RequestBody Book newBook)
     {
+        System.out.println("Received book: " + newBook);
+
         // Traitement de la nouvelle image
         // Enregistrement de l'image dans votre système de stockage
         // Liaison de l'image à l'objet Book
         return bookService.createBook(newBook);
     }
 
+
     @PutMapping("/books/{id}")
-    public Book update(@RequestBody Book newBook, @PathVariable Long id) {
+    public Book update(@RequestBody Book newBook, @PathVariable Long id)
+
+    {
+        System.err.println(newBook.getOwner());
         return bookService.updateBook(newBook, id);
     }
 
