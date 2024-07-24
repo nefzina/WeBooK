@@ -37,8 +37,9 @@ public class Book {
     private Media coverImage;
 
     @JsonIgnoreProperties("books") // Ignore la propriété 'books' dans 'Category' pour éviter la récursion
-   // @JsonBackReference(value="book-category") // Si je mets ça en commentaire, impossible de se connecter mais on voit la catégorie
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, optional = false)
+    // @JsonBackReference(value="book-category") // Si je mets ça en commentaire, impossible de se connecter mais on voit la catégorie
+    // @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
     private Category bookCategory;
 
